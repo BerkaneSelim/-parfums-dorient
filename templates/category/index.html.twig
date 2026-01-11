@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestion des catégories</h1>
+    <a href="{{ path('app_category_new') }}" class="btn" style="background-color: #8b6f47; color: white;">
+        ➕ Nouvelle catégorie
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead style="background-color: #f5e6d3;">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td><strong>{{ category.nom }}</strong></td>
+                    <td>{{ category.description }}</td>
+                    <td class="text-end">
+                        <a href="{{ path('app_category_show', {'id': category.id}) }}" class="btn btn-sm btn-info">
+                            👁️ Voir
+                        </a>
+                        <a href="{{ path('app_category_edit', {'id': category.id}) }}" class="btn btn-sm btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Aucune catégorie trouvée</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

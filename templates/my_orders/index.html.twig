@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="mb-4">
+    <h1 class="display-5 fw-bold" style="color: #8b6f47;">
+        📦 Mes commandes
+    </h1>
+    <p class="text-muted">Suivez l'état de vos commandes</p>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if orders|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead style="background-color: #f5e6d3;">
+                        <tr>
+                            <th>N° Commande</th>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td><strong>{{ order.orderNumber }}</strong></td>
+                            <td>{{ order.createdAt|date('d/m/Y H:i') }}</td>
+                            <td><strong style="color: #8b6f47;">{{ order.totalPrice }}€</strong></td>
+                            <td>
+                                {% if order.status == 'en_cours' %}
+                                    <span class="badge bg-warning">⏳ En cours</span>
+                                {% elseif order.status == 'expediee' %}
+                                    <span class="badge bg-info">📦 Expédiée</span>
+                                {% elseif order.status == 'livree' %}
+                                    <span class="badge bg-success">✅ Livrée</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ order.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <a href="{{ path('app_my_orders_show', {'id': order.id}) }}" class="btn btn-sm btn-info">
+                                    👁️ Voir
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div style="font-size: 4rem; color: #ccc;">📦</div>
+                <h4 class="text-muted">Aucune commande</h4>
+                <p class="text-muted">Vous n'avez pas encore passé de commande</p>
+                <a href="{{ path('app_home') }}" class="btn mt-3" style="background-color: #8b6f47; color: white;">
+                    Découvrir nos produits
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

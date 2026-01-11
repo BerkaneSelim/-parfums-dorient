@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    <div class="mb-3">
+        {{ form_label(form.user, 'Client', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.user, {'attr': {'class': 'form-select'}}) }}
+        {{ form_errors(form.user) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.subject, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.subject) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.message, 'Message', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.message, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+        {{ form_errors(form.message) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.response, 'Réponse de l\'administrateur', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.response, {'attr': {'class': 'form-control', 'rows': 5}}) }}
+        {{ form_errors(form.response) }}
+        <small class="text-muted">Laissez vide si vous n'avez pas encore de réponse</small>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.status, {'attr': {'class': 'form-select'}}) }}
+        {{ form_errors(form.status) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.createdAt, 'Date de création', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.createdAt) }}
+    </div>
+
+    <button class="btn" style="background-color: #8b6f47; color: white;">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+{{ form_end(form) }}

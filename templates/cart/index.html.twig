@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="mb-4">
+    <h1 class="display-5 fw-bold" style="color: #8b6f47;">
+        🛒 Mon Panier
+    </h1>
+</div>
+
+<div class="row">
+    <!-- Liste des produits du panier -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                {% if cartItems|length > 0 %}
+                    {% for item in cartItems %}
+                    <div class="cart-item mb-3 p-3 border rounded">
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <img src="{{ asset('img/' ~ item.product.image) }}" class="img-fluid rounded" alt="{{ item.product.nom }}">
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-1 fw-bold">{{ item.product.nom }}</h6>
+                                <p class="text-muted small mb-0">{{ item.product.prix }}€</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="mb-0">Quantité : <strong>{{ item.quantity }}</strong></p>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <strong style="color: #8b6f47;">{{ item.subtotal }}€</strong>
+                            </div>
+                            <div class="col-md-2 text-end">
+                                <a href="{{ path('app_cart_remove', {'id': item.product.id}) }}" class="btn btn-sm btn-danger">
+                                    🗑️ Supprimer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <div style="font-size: 4rem; color: #ccc;">🛒</div>
+                        <h4 class="text-muted">Votre panier est vide</h4>
+                        <a href="{{ path('app_home') }}" class="btn mt-3" style="background-color: #8b6f47; color: white;">
+                            Découvrir nos produits
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Résumé de la commande -->
+    <div class="col-md-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+            <div class="card-header" style="background-color: #f5e6d3;">
+                <h5 class="mb-0 fw-bold" style="color: #8b6f47;">Résumé</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Sous-total :</span>
+                    <strong>{{ total }}€</strong>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Livraison :</span>
+                    <strong style="color: #8a9a5b;">Gratuite</strong>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total :</strong>
+                    <strong style="color: #8b6f47; font-size: 1.5rem;">{{ total }}€</strong>
+                </div>
+                
+                {% if cartItems|length > 0 %}
+                    <a href="{{ path('app_checkout_cart') }}" class="btn w-100 mb-2" style="background-color: #8b6f47; color: white;">
+                        ✅ Commander
+                    </a>
+                    
+                    <a href="{{ path('app_cart_clear') }}" class="btn btn-outline-danger w-100" onclick="return confirm('Vider le panier ?')">
+                        Vider le panier
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

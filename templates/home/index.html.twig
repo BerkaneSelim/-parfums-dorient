@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<!-- Hero Section avec image de fond -->
+<div class="hero-section text-center py-5 position-relative" style="
+    background: linear-gradient(135deg, rgba(62, 39, 35, 0.7), rgba(109, 76, 65, 0.6)), 
+                url('{{ asset('img/logobedouin.jpg') }}');
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px;
+    color: white;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <div>
+        <h1 class="display-3 fw-bold text-white mb-3 d-flex align-items-center justify-content-center">
+            <img src="{{ asset('img/logobedouin.jpg') }}" 
+                 alt="Logo" 
+                 style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%; margin-right: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            Parfum d'Orient
+        </h1>
+        <p class="lead fs-4 text-white">Découvrez nos parfums authentiques venus du Moyen-Orient</p>
+        <a href="#produits" class="btn btn-light btn-lg mt-3 px-5">Découvrir nos parfums</a>
+    </div>
+</div>
+
+<!-- Section Produits -->
+<div class="my-5" id="produits">
+    <h2 class="text-center mb-5 display-5 fw-bold" style="color: #8b6f47;">
+        ✨ Notre Collection
+    </h2>
+    
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm product-card" style="border: none; border-radius: 15px; overflow: hidden; transition: transform 0.3s;">
+                <!-- Image du produit -->
+                <a href="{{ path('app_product_detail', {'id': product.id}) }}">
+                    <div style="height: 300px; overflow: hidden; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
+                        <img src="{{ asset('img/' ~ product.image) }}" 
+                             class="card-img-top" 
+                             alt="{{ product.nom }}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </a>
+                
+                <div class="card-body p-4">
+                    <a href="{{ path('app_category_products', {'id': product.category.id}) }}" class="badge mb-2 text-decoration-none" style="background-color: #8a9a5b; font-size: 0.85rem;">
+                        {{ product.category.nom }}
+                    </a>
+                    
+                    <a href="{{ path('app_product_detail', {'id': product.id}) }}" class="text-decoration-none">
+                        <h5 class="card-title fw-bold mb-2" style="color: #5c4033;">{{ product.nom }}</h5>
+                    </a>
+                    
+                    <p class="card-text text-muted small mb-3">{{ product.description|slice(0, 80) }}...</p>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="h4 mb-0 fw-bold" style="color: #8b6f47;">{{ product.prix }}€</span>
+                        <a href="{{ path('app_cart_add', {'id': product.id}) }}" class="btn btn-sm px-4" 
+                           style="background-color: #8b6f47; color: white; border-radius: 25px; text-decoration: none;">
+                            🛒 Ajouter au panier
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12">
+            <p class="text-center text-muted fs-5">Aucun produit disponible pour le moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Section Avantages -->
+<div class="row g-4 my-5 py-5" style="background: linear-gradient(135deg, #f5e6d3, #e8d5b7); border-radius: 15px;">
+    <div class="col-md-4 text-center p-4">
+        <div class="mb-3" style="font-size: 3rem;">🚚</div>
+        <h5 class="fw-bold">Livraison Rapide</h5>
+        <p class="text-muted">Expédition sous 24h</p>
+    </div>
+    <div class="col-md-4 text-center p-4">
+        <div class="mb-3" style="font-size: 3rem;">✨</div>
+        <h5 class="fw-bold">Qualité Premium</h5>
+        <p class="text-muted">Parfums authentiques</p>
+    </div>
+    <div class="col-md-4 text-center p-4">
+        <div class="mb-3" style="font-size: 3rem;">💝</div>
+        <h5 class="fw-bold">Satisfaction Garantie</h5>
+        <p class="text-muted">Retour sous 30 jours</p>
+    </div>
+</div>
+
+<style>
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+</style>
+{% endblock %}

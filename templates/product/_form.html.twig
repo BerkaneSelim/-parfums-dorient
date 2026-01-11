@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+    <div class="mb-3">
+        {{ form_label(form.nom, 'Nom du produit', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.prix, 'Prix (€)', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.prix) }}
+        </div>
+
+        <div class="col-md-6 mb-3">
+            {{ form_label(form.stock, 'Stock', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.stock, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.stock) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.image, 'URL de l\'image (optionnel)', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.image) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.category, 'Catégorie', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+        {{ form_errors(form.category) }}
+    </div>
+
+    <button class="btn" style="background-color: #8b6f47; color: white;">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+{{ form_end(form) }}

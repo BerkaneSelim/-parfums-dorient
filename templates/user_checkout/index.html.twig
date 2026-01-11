@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finaliser ma commande - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header" style="background-color: #f5e6d3;">
+                <h4 class="mb-0 fw-bold" style="color: #8b6f47;">📋 Informations de livraison</h4>
+            </div>
+            <div class="card-body p-4">
+                {{ form_start(form) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.shippingName) }}
+                    {{ form_widget(form.shippingName) }}
+                    {{ form_errors(form.shippingName) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(form.shippingAddress) }}
+                    {{ form_widget(form.shippingAddress) }}
+                    {{ form_errors(form.shippingAddress) }}
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        {{ form_label(form.shippingPostalCode) }}
+                        {{ form_widget(form.shippingPostalCode) }}
+                        {{ form_errors(form.shippingPostalCode) }}
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        {{ form_label(form.shippingCity) }}
+                        {{ form_widget(form.shippingCity) }}
+                        {{ form_errors(form.shippingCity) }}
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    {{ form_label(form.shippingPhone) }}
+                    {{ form_widget(form.shippingPhone) }}
+                    {{ form_errors(form.shippingPhone) }}
+                </div>
+                
+                <button type="submit" class="btn btn-lg w-100" style="background-color: #8b6f47; color: white;">
+                    ✅ Valider ma commande
+                </button>
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow-sm sticky-top" style="top: 20px;">
+            <div class="card-header" style="background-color: #f5e6d3;">
+                <h5 class="mb-0 fw-bold" style="color: #8b6f47;">📦 Votre commande</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <img src="{{ asset('img/' ~ product.image) }}" class="img-fluid rounded" alt="{{ product.nom }}" style="max-height: 150px;">
+                </div>
+                
+                <h6 class="fw-bold">{{ product.nom }}</h6>
+                <p class="text-muted small">{{ product.description|slice(0, 80) }}...</p>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Prix :</span>
+                    <strong>{{ product.prix }}€</strong>
+                </div>
+                
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Livraison :</span>
+                    <strong style="color: #8a9a5b;">Gratuite</strong>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex justify-content-between">
+                    <strong>Total :</strong>
+                    <strong style="color: #8b6f47; font-size: 1.5rem;">{{ product.prix }}€</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

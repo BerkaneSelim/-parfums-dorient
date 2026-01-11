@@ -1,0 +1,37 @@
+{{ form_start(form) }}
+    <div class="mb-3">
+        {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.prenom) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.email, 'Adresse email', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.email) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.roles, 'Rôle', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.roles, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.roles) }}
+        <small class="text-muted">Sélectionnez ROLE_ADMIN pour un administrateur, ROLE_USER pour un utilisateur normal</small>
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.password, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
+        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.password) }}
+        <small class="text-muted">Laissez vide pour ne pas changer le mot de passe</small>
+    </div>
+
+    <button class="btn" style="background-color: #8b6f47; color: white;">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+{{ form_end(form) }}

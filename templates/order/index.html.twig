@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des commandes{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Gestion des commandes</h1>
+    <a href="{{ path('app_order_new') }}" class="btn" style="background-color: #8b6f47; color: white;">
+        ➕ Nouvelle commande
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead style="background-color: #f5e6d3;">
+                <tr>
+                    <th>N° Commande</th>
+                    <th>Client</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Statut</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><strong>{{ order.orderNumber }}</strong></td>
+                    <td>{{ order.user.nom }} {{ order.user.prenom }}</td>
+                    <td>{{ order.createdAt ? order.createdAt|date('d/m/Y H:i') : '' }}</td>
+                    <td><strong style="color: #8b6f47;">{{ order.totalPrice }}€</strong></td>
+                    <td>
+                        {% if order.status == 'en_cours' %}
+                            <span class="badge bg-warning">⏳ En cours</span>
+                        {% elseif order.status == 'expediee' %}
+                            <span class="badge bg-info">📦 Expédiée</span>
+                        {% elseif order.status == 'livree' %}
+                            <span class="badge bg-success">✅ Livrée</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ order.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ path('app_order_show', {'id': order.id}) }}" class="btn btn-sm btn-info">
+                            👁️ Voir
+                        </a>
+                        <a href="{{ path('app_order_edit', {'id': order.id}) }}" class="btn btn-sm btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">Aucune commande trouvée</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

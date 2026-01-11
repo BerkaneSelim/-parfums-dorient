@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande validée - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm text-center py-5">
+            <div class="card-body">
+                <div style="font-size: 5rem; color: #8a9a5b;">✅</div>
+                <h1 class="display-4 fw-bold mb-3" style="color: #8b6f47;">
+                    Commande validée !
+                </h1>
+                <p class="lead text-muted mb-4">
+                    Merci pour votre commande. Nous la préparons avec soin.
+                </p>
+                
+                <div class="card bg-light mb-4">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">📋 Récapitulatif de votre commande</h5>
+                        <div class="row">
+                            <div class="col-md-6 text-start">
+                                <p><strong>Numéro de commande :</strong></p>
+                                <p><strong>Date :</strong></p>
+                                <p><strong>Statut :</strong></p>
+                                <p><strong>Montant total :</strong></p>
+                            </div>
+                            <div class="col-md-6 text-start">
+                                <p>{{ order.orderNumber }}</p>
+                                <p>{{ order.createdAt|date('d/m/Y à H:i') }}</p>
+                                <p><span class="badge bg-warning">⏳ En cours</span></p>
+                                <p><strong style="color: #8b6f47; font-size: 1.3rem;">{{ order.totalPrice }}€</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>📧 Un email de confirmation vous a été envoyé.</strong><br>
+                    Vous pouvez suivre votre commande dans votre espace client.
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{{ path('app_home') }}" class="btn btn-lg me-2" style="background-color: #8b6f47; color: white;">
+                        🏠 Retour à l'accueil
+                    </a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_order_index') }}" class="btn btn-lg btn-outline-secondary">
+                        📦 Voir toutes les commandes
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Vider le panier après la commande
+localStorage.removeItem('cart');
+</script>
+{% endblock %}

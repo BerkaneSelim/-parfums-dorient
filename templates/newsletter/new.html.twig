@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvel abonné{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="mb-4">Ajouter un nouvel abonné</h1>
+
+                {{ include('newsletter/_form.html.twig') }}
+
+                <div class="mt-3">
+                    <a href="{{ path('app_newsletter_index') }}" class="btn btn-secondary">
+                        ← Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

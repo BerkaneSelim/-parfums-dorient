@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du produit{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="mb-4">Détails du produit</h1>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="background-color: #f5e6d3; width: 30%;">ID</th>
+                            <td>{{ product.id }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Nom</th>
+                            <td><strong>{{ product.nom }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Catégorie</th>
+                            <td>
+                                <span class="badge" style="background-color: #8a9a5b;">
+                                    {{ product.category.nom }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Description</th>
+                            <td>{{ product.description }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Prix</th>
+                            <td><strong style="color: #8b6f47; font-size: 1.3rem;">{{ product.prix }}€</strong></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Stock</th>
+                            <td>{{ product.stock }} unités</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Image</th>
+                            <td>{{ product.image ?: 'Aucune image' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>
+                        <a href="{{ path('app_product_index') }}" class="btn btn-secondary me-2">
+                            ← Retour à la liste
+                        </a>
+                        <a href="{{ path('app_product_edit', {'id': product.id}) }}" class="btn btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </div>
+                    
+                    {{ include('product/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'abonné{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Détails de l'abonné</h1>
+                    {% if newsletter.isActive %}
+                        <span class="badge bg-success fs-5">✅ Actif</span>
+                    {% else %}
+                        <span class="badge bg-danger fs-5">❌ Désabonné</span>
+                    {% endif %}
+                </div>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="background-color: #f5e6d3; width: 40%;">ID</th>
+                            <td>{{ newsletter.id }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Adresse email</th>
+                            <td><strong>{{ newsletter.email }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Date d'abonnement</th>
+                            <td>{{ newsletter.subscribedAt ? newsletter.subscribedAt|date('d/m/Y à H:i') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #f5e6d3;">Statut</th>
+                            <td>
+                                {% if newsletter.isActive %}
+                                    <span class="badge bg-success">✅ Abonnement actif</span>
+                                {% else %}
+                                    <span class="badge bg-danger">❌ Désabonné</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>
+                        <a href="{{ path('app_newsletter_index') }}" class="btn btn-secondary me-2">
+                            ← Retour à la liste
+                        </a>
+                        <a href="{{ path('app_newsletter_edit', {'id': newsletter.id}) }}" class="btn btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </div>
+                    
+                    {{ include('newsletter/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

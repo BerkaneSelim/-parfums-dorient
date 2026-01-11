@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions Légales - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <h1 class="display-5 fw-bold mb-4" style="color: #8b6f47;">
+            📄 Mentions Légales
+        </h1>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">1. Éditeur du site</h3>
+                <p><strong>Raison sociale :</strong> Parfum d'Orient SARL</p>
+                <p><strong>Siège social :</strong> 1 Place Mendes France, 91200 Athis Mons, France</p>
+                <p><strong>SIRET :</strong> 123 456 789 00012</p>
+                <p><strong>Capital social :</strong> 10 000 €</p>
+                <p><strong>Email :</strong> contact@parfumdorient.fr</p>
+                <p><strong>Téléphone :</strong> 06 59 45 46 47</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">2. Directeur de la publication</h3>
+                <p><strong>Nom :</strong> M. Berkane Selim</p>
+                <p><strong>Fonction :</strong> Gérant</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">3. Hébergement</h3>
+                <p><strong>Hébergeur :</strong> OVH</p>
+                <p><strong>Adresse :</strong> 2 rue Kellermann, 59100 Roubaix, France</p>
+                <p><strong>Téléphone :</strong> 1007</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">4. Propriété intellectuelle</h3>
+                <p>L'ensemble des contenus présents sur le site Parfum d'Orient (textes, images, logos, marques) sont protégés par le droit de la propriété intellectuelle.</p>
+                <p>Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans autorisation écrite préalable.</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">5. Données personnelles</h3>
+                <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, de suppression et d'opposition concernant vos données personnelles.</p>
+                <p>Pour exercer ces droits, contactez-nous à : <strong>contact@parfumdorient.fr</strong></p>
+                <p>Vos données sont conservées de manière sécurisée et ne sont jamais transmises à des tiers sans votre consentement.</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm mb-4" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">6. Cookies</h3>
+                <p>Le site utilise des cookies de session pour améliorer votre expérience de navigation et gérer votre panier d'achat.</p>
+                <p>Vous pouvez désactiver les cookies dans les paramètres de votre navigateur, mais certaines fonctionnalités du site pourraient ne plus fonctionner correctement.</p>
+            </div>
+        </div>
+        
+        <div class="card shadow-sm" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                <h3 class="fw-bold mb-3" style="color: #5c4033;">7. Litiges</h3>
+                <p>Les présentes mentions légales sont régies par le droit français.</p>
+                <p>En cas de litige, les tribunaux français seront seuls compétents.</p>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ path('app_home') }}" class="btn btn-lg" style="background-color: #8b6f47; color: white; border-radius: 50px;">
+                Retour à l'accueil
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="mb-4">
+    <h1 class="display-5 fw-bold" style="color: #8b6f47;">
+        📊 Tableau de bord
+    </h1>
+    <p class="text-muted">Vue d'ensemble de votre boutique</p>
+</div>
+
+<!-- Statistiques principales -->
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm" style="border-left: 4px solid #8b6f47;">
+            <div class="card-body">
+                <div class="mb-2" style="font-size: 2.5rem; color: #8b6f47;">📦</div>
+                <h3 class="fw-bold mb-1">{{ totalProducts }}</h3>
+                <p class="text-muted mb-0">Produits</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm" style="border-left: 4px solid #8a9a5b;">
+            <div class="card-body">
+                <div class="mb-2" style="font-size: 2.5rem; color: #8a9a5b;">📂</div>
+                <h3 class="fw-bold mb-1">{{ totalCategories }}</h3>
+                <p class="text-muted mb-0">Catégories</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm" style="border-left: 4px solid #5c4033;">
+            <div class="card-body">
+                <div class="mb-2" style="font-size: 2.5rem; color: #5c4033;">👥</div>
+                <h3 class="fw-bold mb-1">{{ totalUsers }}</h3>
+                <p class="text-muted mb-0">Membres</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm" style="border-left: 4px solid #d4a574;">
+            <div class="card-body">
+                <div class="mb-2" style="font-size: 2.5rem; color: #d4a574;">🛍️</div>
+                <h3 class="fw-bold mb-1">{{ totalOrders }}</h3>
+                <p class="text-muted mb-0">Commandes</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chiffre d'affaires -->
+<div class="row g-4 mb-5">
+    <div class="col-md-6">
+        <div class="card shadow-sm" style="background: linear-gradient(135deg, #8b6f47, #5c4033); color: white;">
+            <div class="card-body text-center p-4">
+                <div class="mb-2" style="font-size: 2.5rem;">💰</div>
+                <h2 class="fw-bold mb-1">{{ totalRevenue|number_format(2, ',', ' ') }}€</h2>
+                <p class="mb-0">Chiffre d'affaires total</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card shadow-sm" style="background: linear-gradient(135deg, #8a9a5b, #6b7a4a); color: white;">
+            <div class="card-body text-center p-4">
+                <div class="mb-2" style="font-size: 2.5rem;">💬</div>
+                <h2 class="fw-bold mb-1">{{ totalMessages }}</h2>
+                <p class="mb-0">Messages SAV reçus</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dernières commandes -->
+<div class="card shadow-sm mb-4">
+    <div class="card-header" style="background-color: #f5e6d3;">
+        <h5 class="mb-0 fw-bold" style="color: #8b6f47;">📋 Dernières commandes</h5>
+    </div>
+    <div class="card-body">
+        {% if latestOrders|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>N° Commande</th>
+                            <th>Client</th>
+                            <th>Date</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in latestOrders %}
+                        <tr>
+                            <td><strong>{{ order.orderNumber }}</strong></td>
+                            <td>{{ order.user.nom }} {{ order.user.prenom }}</td>
+                            <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                            <td><strong style="color: #8b6f47;">{{ order.totalPrice }}€</strong></td>
+                            <td>
+                                {% if order.status == 'en_cours' %}
+                                    <span class="badge bg-warning">En cours</span>
+                                {% elseif order.status == 'expediee' %}
+                                    <span class="badge bg-info">Expédiée</span>
+                                {% else %}
+                                    <span class="badge bg-success">Livrée</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-muted text-center mb-0">Aucune commande pour le moment</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Derniers messages SAV -->
+<div class="card shadow-sm">
+    <div class="card-header" style="background-color: #f5e6d3;">
+        <h5 class="mb-0 fw-bold" style="color: #8b6f47;">💬 Derniers messages SAV</h5>
+    </div>
+    <div class="card-body">
+        {% if latestMessages|length > 0 %}
+            <div class="list-group list-group-flush">
+                {% for message in latestMessages %}
+                <div class="list-group-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1 fw-bold">{{ message.subject }}</h6>
+                            <p class="mb-1 text-muted small">{{ message.user.nom }} - {{ message.createdAt|date('d/m/Y H:i') }}</p>
+                        </div>
+                        {% if message.status == 'nouveau' %}
+                            <span class="badge bg-warning">Nouveau</span>
+                        {% else %}
+                            <span class="badge bg-success">Traité</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted text-center mb-0">Aucun message pour le moment</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

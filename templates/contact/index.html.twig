@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="mb-4">
+            <h1 class="display-5 fw-bold" style="color: #8b6f47;">
+                📧 Nous Contacter
+            </h1>
+            <p class="text-muted">Une question ? Un problème ? N'hésitez pas à nous écrire !</p>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+
+        <div class="card shadow-sm" style="border-radius: 15px;">
+            <div class="card-body p-4">
+                {{ form_start(form) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.subject) }}
+                    {{ form_widget(form.subject) }}
+                    {{ form_errors(form.subject) }}
+                </div>
+                
+                <div class="mb-4">
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message, {'attr': {'rows': 6}}) }}
+                    {{ form_errors(form.message) }}
+                </div>
+                
+                <button type="submit" class="btn btn-lg w-100" style="background-color: #8b6f47; color: white;">
+                    ✉️ Envoyer le message
+                </button>
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        <!-- Informations de contact -->
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="card text-center p-4" style="border-radius: 15px; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
+                    <div class="mb-3" style="font-size: 2.5rem;">📍</div>
+                    <h5 class="fw-bold">Adresse</h5>
+                    <p class="text-muted mb-0">1 Place Mendes France, 91200 Athis Mons, France</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card text-center p-4" style="border-radius: 15px; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
+                    <div class="mb-3" style="font-size: 2.5rem;">📧</div>
+                    <h5 class="fw-bold">Email</h5>
+                    <p class="text-muted mb-0">contact@parfumdorient.fr</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card text-center p-4" style="border-radius: 15px; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
+                    <div class="mb-3" style="font-size: 2.5rem;">📞</div>
+                    <h5 class="fw-bold">Téléphone</h5>
+                    <p class="text-muted mb-0">06 59 45 46 47</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

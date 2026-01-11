@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la commande{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="mb-4">Commande #{{ order.orderNumber }}</h1>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5>👤 Informations client</h5>
+                                <p class="mb-1"><strong>Nom :</strong> {{ order.user.nom }} {{ order.user.prenom }}</p>
+                                <p class="mb-0"><strong>Email :</strong> {{ order.user.email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h5>📋 Détails commande</h5>
+                                <p class="mb-1"><strong>Date :</strong> {{ order.createdAt ? order.createdAt|date('d/m/Y à H:i') : '' }}</p>
+                                <p class="mb-1"><strong>Statut :</strong> 
+                                    {% if order.status == 'en_cours' %}
+                                        <span class="badge bg-warning">⏳ En cours</span>
+                                    {% elseif order.status == 'expediee' %}
+                                        <span class="badge bg-info">📦 Expédiée</span>
+                                    {% elseif order.status == 'livree' %}
+                                        <span class="badge bg-success">✅ Livrée</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ order.status }}</span>
+                                    {% endif %}
+                                </p>
+                                <p class="mb-0"><strong>Total :</strong> <span style="color: #8b6f47; font-size: 1.3rem;">{{ order.totalPrice }}€</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if order.orderItems|length > 0 %}
+                <h5 class="mb-3">📦 Articles commandés</h5>
+                <table class="table table-bordered">
+                    <thead style="background-color: #f5e6d3;">
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix unitaire</th>
+                            <th>Quantité</th>
+                            <th>Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.orderItems %}
+                        <tr>
+                            <td><strong>{{ item.product.nom }}</strong></td>
+                            <td>{{ item.price }}€</td>
+                            <td>{{ item.quantity }}</td>
+                            <td><strong>{{ item.price * item.quantity }}€</strong></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div>
+                        <a href="{{ path('app_order_index') }}" class="btn btn-secondary me-2">
+                            ← Retour à la liste
+                        </a>
+                        <a href="{{ path('app_order_edit', {'id': order.id}) }}" class="btn btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </div>
+                    
+                    {{ include('order/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

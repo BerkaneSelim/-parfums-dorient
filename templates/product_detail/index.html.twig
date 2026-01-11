@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.nom }} - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_category_products', {'id': product.category.id}) }}">{{ product.category.nom }}</a></li>
+            <li class="breadcrumb-item active">{{ product.nom }}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <!-- Image du produit -->
+    <div class="col-md-6">
+        <div class="card shadow-sm" style="border: none; border-radius: 15px; overflow: hidden;">
+            <img src="{{ asset('img/' ~ product.image) }}" 
+                 class="img-fluid" 
+                 alt="{{ product.nom }}"
+                 style="width: 100%; height: 500px; object-fit: cover;">
+        </div>
+    </div>
+    
+    <!-- Détails du produit -->
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4" style="border-radius: 15px;">
+            <span class="badge mb-3" style="background-color: #8a9a5b; font-size: 0.9rem; width: fit-content;">
+                {{ product.category.nom }}
+            </span>
+            
+            <h1 class="display-5 fw-bold mb-3" style="color: #5c4033;">
+                {{ product.nom }}
+            </h1>
+            
+            <p class="lead mb-4">{{ product.description }}</p>
+            
+            <div class="mb-4">
+                <h2 class="display-4 fw-bold" style="color: #8b6f47;">
+                    {{ product.prix }}€
+                </h2>
+            </div>
+            
+            <div class="mb-4">
+                <p class="mb-2">
+                    <strong>Stock disponible :</strong> 
+                    {% if product.stock > 10 %}
+                        <span class="badge bg-success">En stock ({{ product.stock }})</span>
+                    {% elseif product.stock > 0 %}
+                        <span class="badge bg-warning">Stock limité ({{ product.stock }})</span>
+                    {% else %}
+                        <span class="badge bg-danger">Rupture de stock</span>
+                    {% endif %}
+                </p>
+            </div>
+            
+            {% if product.stock > 0 %}
+                <div class="d-grid gap-2">
+                    <a href="{{ path('app_cart_add', {'id': product.id}) }}" class="btn btn-lg" 
+                       style="background-color: #8b6f47; color: white;">
+                        🛒 Ajouter au panier
+                    </a>
+                    
+                    {% if app.user %}
+                        <a href="{{ path('app_user_checkout', {'id': product.id}) }}" class="btn btn-lg btn-outline-secondary">
+                            ⚡ Commander directement
+                        </a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    Ce produit est actuellement en rupture de stock.
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Informations supplémentaires -->
+        <div class="card shadow-sm mt-4 p-4" style="border-radius: 15px; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
+            <h5 class="fw-bold mb-3">🌿 Informations</h5>
+            <ul class="list-unstyled mb-0">
+                <li class="mb-2">✨ Parfum authentique d'Orient</li>
+                <li class="mb-2">🚚 Livraison gratuite</li>
+                <li class="mb-2">💝 Retour sous 30 jours</li>
+                <li class="mb-0">🔒 Paiement sécurisé</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Produits de la même catégorie -->
+<div class="mt-5">
+    <h3 class="mb-4 fw-bold" style="color: #8b6f47;">
+        Produits similaires
+    </h3>
+    
+    <div class="row g-4">
+        {% set similarProducts = 0 %}
+        {% for similarProduct in product.category.products %}
+            {% if similarProduct.id != product.id and similarProducts < 3 %}
+                {% set similarProducts = similarProducts + 1 %}
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm" style="border: none; border-radius: 15px; overflow: hidden;">
+                        <div style="height: 200px; overflow: hidden;">
+                            <img src="{{ asset('img/' ~ similarProduct.image) }}" 
+                                 class="card-img-top" 
+                                 alt="{{ similarProduct.nom }}"
+                                 style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">{{ similarProduct.nom }}</h5>
+                            <p class="text-muted">{{ similarProduct.prix }}€</p>
+                            <a href="{{ path('app_product_detail', {'id': similarProduct.id}) }}" class="btn btn-sm btn-outline-secondary">
+                                Voir le produit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
