@@ -43,19 +43,6 @@
                 </h2>
             </div>
             
-            <div class="mb-4">
-                <p class="mb-2">
-                    <strong>Stock disponible :</strong> 
-                    {% if product.stock > 10 %}
-                        <span class="badge bg-success">En stock ({{ product.stock }})</span>
-                    {% elseif product.stock > 0 %}
-                        <span class="badge bg-warning">Stock limité ({{ product.stock }})</span>
-                    {% else %}
-                        <span class="badge bg-danger">Rupture de stock</span>
-                    {% endif %}
-                </p>
-            </div>
-            
             {% if product.stock > 0 %}
                 <div class="d-grid gap-2">
                     <a href="{{ path('app_cart_add', {'id': product.id}) }}" class="btn btn-lg" 
@@ -71,7 +58,7 @@
                 </div>
             {% else %}
                 <div class="alert alert-warning">
-                    Ce produit est actuellement en rupture de stock.
+                    Ce produit est actuellement indisponible.
                 </div>
             {% endif %}
         </div>

@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[IsGranted('ROLE_USER')]
 class CheckoutController extends AbstractController
@@ -20,7 +22,8 @@ class CheckoutController extends AbstractController
     public function index(
         Request $request,
         ProductRepository $productRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
     ): Response
     {
         // Récupérer le panier depuis la requête
@@ -76,6 +79,22 @@ class CheckoutController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
             
+            // ========== ENVOI DE L'EMAIL DE CONFIRMATION ==========
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $email = (new Email())
+                ->from('noreply@parfumdorient.fr')
+                ->to($user->getEmail())
+                ->subject('Confirmation de votre commande #' . $order->getOrderNumber())
+                ->html($this->renderView('emails/confirmation_commande.html.twig', [
+                    'order' => $order
+                ]));
+            
+            $mailer->send($email);
+            // ======================================================
+            
+            $this->addFlash('success', 'Votre commande a été validée ! Un email de confirmation vous a été envoyé.');
+            
             return $this->render('checkout/success.html.twig', [
                 'order' => $order,
             ]);
@@ -108,7 +127,8 @@ class CheckoutController extends AbstractController
     public function checkoutCart(
         Request $request,
         ProductRepository $productRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        MailerInterface $mailer
     ): Response
     {
         // Récupérer le panier depuis la session
@@ -158,8 +178,24 @@ class CheckoutController extends AbstractController
             $entityManager->persist($order);
             $entityManager->flush();
             
+            // ========== ENVOI DE L'EMAIL DE CONFIRMATION ==========
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+            $email = (new Email())
+                ->from('noreply@parfumdorient.fr')
+                ->to($user->getEmail())
+                ->subject('Confirmation de votre commande #' . $order->getOrderNumber())
+                ->html($this->renderView('emails/confirmation_commande.html.twig', [
+                    'order' => $order
+                ]));
+            
+            $mailer->send($email);
+            // ======================================================
+            
             // Vider le panier
             $session->remove('cart');
+            
+            $this->addFlash('success', 'Votre commande a été validée ! Un email de confirmation vous a été envoyé.');
             
             return $this->render('checkout/success.html.twig', [
                 'order' => $order,

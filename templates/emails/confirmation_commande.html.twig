@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f8f9fa; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; padding: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #5c4033; margin: 0;">🐪 Parfum d'Orient</h1>
+            <p style="color: #8b6f47; margin: 5px 0 0 0;">Confirmation de commande</p>
+        </div>
+        
+        <h2 style="color: #5c4033;">Bonjour {{ order.user.nom }},</h2>
+        
+        <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            Votre commande a bien été enregistrée ! 🎉
+        </p>
+        
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <p style="margin: 5px 0;"><strong>Numéro de commande :</strong> {{ order.orderNumber }}</p>
+            <p style="margin: 5px 0;"><strong>Date :</strong> {{ order.createdAt|date('d/m/Y à H:i') }}</p>
+            <p style="margin: 5px 0;"><strong>Montant total :</strong> {{ order.totalPrice }}€</p>
+            <p style="margin: 5px 0;"><strong>Statut :</strong> {{ order.status }}</p>
+        </div>
+        
+        <h3 style="color: #5c4033; margin-top: 30px;">📦 Détails de la commande</h3>
+        
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+            {% for item in order.orderItems %}
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td style="padding: 10px 0;">{{ item.product.nom }}</td>
+                <td style="padding: 10px 0; text-align: center;">x{{ item.quantity }}</td>
+                <td style="padding: 10px 0; text-align: right;">{{ item.price }}€</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <h3 style="color: #5c4033; margin-top: 30px;">🚚 Adresse de livraison</h3>
+        <p style="font-size: 14px; color: #666; line-height: 1.6;">
+            {{ order.shippingName }}<br>
+            {{ order.shippingAddress }}<br>
+            {{ order.shippingPostalCode }} {{ order.shippingCity }}<br>
+            📞 {{ order.shippingPhone }}
+        </p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="http://localhost:8000/mes-commandes" 
+               style="background: linear-gradient(135deg, #8b6f47, #5c4033); 
+                      color: white; 
+                      padding: 15px 40px; 
+                      text-decoration: none; 
+                      border-radius: 25px; 
+                      display: inline-block;
+                      font-weight: bold;">
+                Suivre ma commande
+            </a>
+        </div>
+        
+        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+        
+        <p style="font-size: 14px; color: #666; text-align: center;">
+            Merci pour votre commande ! 💝<br>
+            L'équipe Parfum d'Orient
+        </p>
+        
+        <p style="font-size: 12px; color: #999; text-align: center; margin-top: 20px;">
+            📧 contact@parfumdorient.fr | 📞 06 59 45 46 47
+        </p>
+    </div>
+</body>
+</html>

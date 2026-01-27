@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions Générales de Vente - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+    <h1 class="mb-4" style="color: #5c4033;">📜 Conditions Générales de Vente</h1>
+    
+    <div class="card shadow-sm p-4" style="border-radius: 15px;">
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">1. Objet</h2>
+        <p>Les présentes Conditions Générales de Vente (CGV) régissent les ventes de produits par Parfum d'Orient sur le site www.parfumdorient.fr.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">2. Prix</h2>
+        <p>Les prix de nos produits sont indiqués en euros toutes taxes comprises (TTC). Parfum d'Orient se réserve le droit de modifier ses prix à tout moment, mais les produits seront facturés sur la base des tarifs en vigueur au moment de la validation de la commande.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">3. Commande</h2>
+        <p>Toute commande effectuée sur le site www.parfumdorient.fr suppose l'acceptation des présentes CGV. Le client doit créer un compte pour passer commande. La validation de la commande entraîne l'acceptation des prix et descriptions des produits disponibles à la vente.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">4. Livraison</h2>
+        <p>Les produits sont livrés à l'adresse indiquée par le client lors de la commande. Les délais de livraison sont de 3 à 5 jours ouvrés en France métropolitaine. Parfum d'Orient ne pourra être tenu responsable des retards de livraison dus au transporteur ou à des circonstances indépendantes de sa volonté.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">5. Paiement</h2>
+        <p>Le paiement des commandes s'effectue en ligne de manière sécurisée. Les moyens de paiement acceptés sont : carte bancaire, PayPal. Le paiement est exigible immédiatement à la commande.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">6. Droit de rétractation</h2>
+        <p>Conformément à l'article L221-18 du Code de la consommation, vous disposez d'un délai de 14 jours à compter de la réception de votre commande pour exercer votre droit de rétractation sans avoir à justifier de motifs ni à payer de pénalité. Les produits doivent être retournés dans leur emballage d'origine et en parfait état.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">7. Garanties</h2>
+        <p>Tous nos produits bénéficient de la garantie légale de conformité et de la garantie contre les vices cachés, conformément aux articles L217-4 et suivants du Code de la consommation.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">8. Réclamations</h2>
+        <p>Pour toute réclamation, vous pouvez contacter notre service client à l'adresse email : contact@parfumdorient.fr ou par téléphone au 06 59 45 46 47.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">9. Données personnelles</h2>
+        <p>Les données personnelles collectées lors de la commande sont nécessaires au traitement de celle-ci. Conformément à la loi "Informatique et Libertés" et au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.</p>
+        
+        <h2 class="h4 mt-4 mb-3" style="color: #8b6f47;">10. Litiges</h2>
+        <p>Les présentes CGV sont soumises à la loi française. En cas de litige, les tribunaux français seront seuls compétents.</p>
+        
+        <hr class="my-4">
+        
+        <p class="text-muted"><small>Dernière mise à jour : Janvier 2026</small></p>
+        
+        <div class="mt-4">
+            <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">← Retour à l'accueil</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
