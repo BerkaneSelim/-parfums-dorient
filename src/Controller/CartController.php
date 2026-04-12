@@ -13,11 +13,9 @@ class CartController extends AbstractController
     #[Route('/panier', name: 'app_cart')]
     public function index(Request $request, ProductRepository $productRepository): Response
     {
-        // Récupérer le panier depuis la session
         $session = $request->getSession();
         $cart = $session->get('cart', []);
         
-        // Récupérer les produits
         $cartItems = [];
         $total = 0;
         
@@ -42,22 +40,36 @@ class CartController extends AbstractController
     #[Route('/panier/ajouter/{id}', name: 'app_cart_add')]
     public function add(int $id, Request $request): Response
     {
-        // Récupérer le panier
         $session = $request->getSession();
         $cart = $session->get('cart', []);
         
-        // Ajouter le produit
         if (isset($cart[$id])) {
             $cart[$id]++;
         } else {
             $cart[$id] = 1;
         }
         
-        // Sauvegarder
         $session->set('cart', $cart);
         
         $this->addFlash('success', 'Produit ajouté au panier !');
         return $this->redirectToRoute('app_home');
+    }
+
+    #[Route('/panier/modifier/{id}/{quantity}', name: 'app_cart_update')]
+    public function update(int $id, int $quantity, Request $request): Response
+    {
+        $session = $request->getSession();
+        $cart = $session->get('cart', []);
+
+        if ($quantity <= 0) {
+            unset($cart[$id]);
+        } else {
+            $cart[$id] = $quantity;
+        }
+
+        $session->set('cart', $cart);
+
+        return $this->redirectToRoute('app_cart');
     }
     
     #[Route('/panier/supprimer/{id}', name: 'app_cart_remove')]

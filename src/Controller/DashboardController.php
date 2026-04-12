@@ -24,26 +24,21 @@ class DashboardController extends AbstractController
         MessageRepository $messageRepository
     ): Response
     {
-        // Statistiques
-        $totalProducts = count($productRepository->findAll());
-        $totalCategories = count($categoryRepository->findAll());
-        $totalUsers = count($userRepository->findAll());
-        $totalOrders = count($orderRepository->findAll());
-        $totalMessages = count($messageRepository->findAll());
-        
-        // Chiffre d'affaires
+        $totalProducts = $productRepository->count([]);
+        $totalCategories = $categoryRepository->count([]);
+        $totalUsers = $userRepository->count([]);
+        $totalOrders = $orderRepository->count([]);
+        $totalMessages = $messageRepository->count([]);
+
         $orders = $orderRepository->findAll();
         $totalRevenue = 0;
         foreach ($orders as $order) {
             $totalRevenue += $order->getTotalPrice();
         }
-        
-        // Dernières commandes
+
         $latestOrders = $orderRepository->findBy([], ['createdAt' => 'DESC'], 5);
-        
-        // Derniers messages
         $latestMessages = $messageRepository->findBy([], ['createdAt' => 'DESC'], 5);
-        
+
         return $this->render('dashboard/index.html.twig', [
             'totalProducts' => $totalProducts,
             'totalCategories' => $totalCategories,

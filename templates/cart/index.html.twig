@@ -10,7 +10,6 @@
 </div>
 
 <div class="row">
-    <!-- Liste des produits du panier -->
     <div class="col-md-8">
         <div class="card shadow-sm">
             <div class="card-body">
@@ -21,19 +20,23 @@
                             <div class="col-md-2">
                                 <img src="{{ asset('img/' ~ item.product.image) }}" class="img-fluid rounded" alt="{{ item.product.nom }}">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <h6 class="mb-1 fw-bold">{{ item.product.nom }}</h6>
                                 <p class="text-muted small mb-0">{{ item.product.prix }}€</p>
                             </div>
-                            <div class="col-md-2">
-                                <p class="mb-0">Quantité : <strong>{{ item.quantity }}</strong></p>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center gap-2">
+                                    <a href="{{ path('app_cart_update', {'id': item.product.id, 'quantity': item.quantity - 1}) }}" class="btn btn-sm btn-outline-secondary">−</a>
+                                    <strong>{{ item.quantity }}</strong>
+                                    <a href="{{ path('app_cart_update', {'id': item.product.id, 'quantity': item.quantity + 1}) }}" class="btn btn-sm btn-outline-secondary">+</a>
+                                </div>
                             </div>
                             <div class="col-md-2 text-end">
                                 <strong style="color: #8b6f47;">{{ item.subtotal }}€</strong>
                             </div>
                             <div class="col-md-2 text-end">
                                 <a href="{{ path('app_cart_remove', {'id': item.product.id}) }}" class="btn btn-sm btn-danger">
-                                    🗑️ Supprimer
+                                    🗑️
                                 </a>
                             </div>
                         </div>
@@ -52,7 +55,6 @@
         </div>
     </div>
     
-    <!-- Résumé de la commande -->
     <div class="col-md-4">
         <div class="card shadow-sm sticky-top" style="top: 20px;">
             <div class="card-header" style="background-color: #f5e6d3;">

@@ -37,6 +37,8 @@
                                     <span class="badge bg-info">📦 Expédiée</span>
                                 {% elseif order.status == 'livree' %}
                                     <span class="badge bg-success">✅ Livrée</span>
+                                {% elseif order.status == 'annulee' %}
+                                    <span class="badge bg-danger">❌ Annulée</span>
                                 {% else %}
                                     <span class="badge bg-secondary">{{ order.status }}</span>
                                 {% endif %}

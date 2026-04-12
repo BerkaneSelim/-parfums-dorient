@@ -8,15 +8,7 @@
         <div class="card shadow-sm">
             <div class="card-body p-5">
                 <form method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-
-                    {% if app.user %}
-                        <div class="mb-3 alert alert-info">
-                            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </div>
-                    {% endif %}
+                    
 
                     <h1 class="h3 mb-4 text-center">Connexion</h1>
 
