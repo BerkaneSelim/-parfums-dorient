@@ -31,26 +31,23 @@ class RegistrationController extends AbstractController
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
-            // Encode le mot de passe
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // ========== ENVOI DE L'EMAIL DE BIENVENUE ==========
             $email = (new Email())
                 ->from('noreply@parfumdorient.fr')
-                ->to($user->getEmail())  // ← CHANGÉ ICI !
-                ->subject('Bienvenue sur Parfum d\'Orient !')
+                ->to($user->getEmail())
+                ->subject("Bienvenue sur Parfum d'Orient !")
                 ->html($this->renderView('emails/bienvenue.html.twig', [
                     'nom' => $user->getNom(),
                     'prenom' => $user->getPrenom()
                 ]));
 
             $mailer->send($email);
-            // ===================================================
 
-            $this->addFlash('success', 'Votre compte a été créé avec succès ! Un email de confirmation vous a été envoyé.');
+            $this->addFlash('success', "Votre compte a été créé avec succès ! Un email de confirmation d'inscription vous a été envoyé.");
 
             return $this->redirectToRoute('app_home');
         }
