@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement sécurisé - Parfum d'Orient{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        
+        <div class="card shadow-sm" style="border-radius: 15px; border: none;">
+            <div class="card-body p-5">
+                
+                <h3 class="fw-bold mb-4 text-center" style="color: #3e2723;">
+                    🔒 Paiement sécurisé
+                </h3>
+
+                <div class="alert alert-info mb-4">
+                    <small>🧪 Mode test — utilisez la carte <strong>4242 4242 4242 4242</strong></small>
+                </div>
+
+                <form id="payment-form">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Informations de carte</label>
+                        <div id="card-element" style="
+                            border: 1px solid #dee2e6;
+                            border-radius: 8px;
+                            padding: 15px;
+                            background: #f8f9fa;">
+                        </div>
+                        <div id="card-errors" class="text-danger mt-2 small"></div>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn w-100 py-3 fw-bold" style="
+                        background: linear-gradient(135deg, #d4a574, #8b6f47);
+                        color: white; border-radius: 10px; border: none;
+                        font-size: 1.1rem;">
+                        <span id="btn-text">💳 Payer maintenant</span>
+                        <span id="btn-spinner" class="d-none">
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            Traitement...
+                        </span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block body_javascripts %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe('{{ stripe_public_key }}');
+    const elements = stripe.elements();
+
+    const cardElement = elements.create('card', {
+        style: {
+            base: {
+                fontSize: '16px',
+                color: '#3e2723',
+                '::placeholder': { color: '#aab7c4' }
+            }
+        }
+    });
+    cardElement.mount('#card-element');
+
+    // Afficher les erreurs
+    cardElement.on('change', (event) => {
+        const errors = document.getElementById('card-errors');
+        errors.textContent = event.error ? event.error.message : '';
+    });
+
+    // Soumettre le paiement
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Désactiver le bouton
+        document.getElementById('btn-text').classList.add('d-none');
+        document.getElementById('btn-spinner').classList.remove('d-none');
+
+        // Récupérer le montant depuis la session
+        const amount = {{ total }};
+
+        // Créer le PaymentIntent
+        const response = await fetch('{{ path("app_stripe_intent") }}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: amount })
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            document.getElementById('card-errors').textContent = data.error;
+            document.getElementById('btn-text').classList.remove('d-none');
+            document.getElementById('btn-spinner').classList.add('d-none');
+            return;
+        }
+
+        // Confirmer le paiement
+        const result = await stripe.confirmCardPayment(data.clientSecret, {
+            payment_method: { card: cardElement }
+        });
+
+        if (result.error) {
+            document.getElementById('card-errors').textContent = result.error.message;
+            document.getElementById('btn-text').classList.remove('d-none');
+            document.getElementById('btn-spinner').classList.add('d-none');
+        } else {
+            // Paiement réussi !
+            window.location.href = '{{ path("app_home") }}?paiement=success';
+        }
+    });
+</script>
+{% endblock %}

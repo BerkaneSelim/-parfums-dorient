@@ -3,7 +3,8 @@
 {% block title %}Accueil - Parfum d'Orient{% endblock %}
 
 {% block body %}
-<!-- Hero Section avec dégradé uniquement -->
+
+<!-- Hero Section -->
 <div class="hero-section text-center py-5 position-relative" style="
     background: linear-gradient(135deg, #3e2723, #6d4c41);
     border-radius: 15px;
@@ -14,34 +15,43 @@
     justify-content: center;
 ">
     <div>
-        <h1 class="display-3 fw-bold text-white mb-3 d-flex align-items-center justify-content-center">
+        <h1 class="display-3 fw-bold text-white mb-3 d-flex align-items-center justify-content-center"
+            id="hero-title" style="opacity: 0;">
             <img src="{{ asset('img/logobedouin.jpg') }}" 
                  alt="Logo" 
                  style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%; margin-right: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
             Parfum d'Orient
         </h1>
-        <p class="lead fs-4 text-white">Découvrez nos parfums authentiques venus du Moyen-Orient</p>
-        <a href="#produits" class="btn btn-light btn-lg mt-3 px-5">Découvrir nos parfums</a>
+        <p class="lead fs-4 text-white" id="hero-subtitle" style="opacity: 0;">
+            Découvrez nos parfums authentiques venus du Moyen-Orient
+        </p>
+        <a href="#produits" class="btn btn-light btn-lg mt-3 px-5" 
+           id="hero-btn" style="opacity: 0;">
+            Découvrir nos parfums
+        </a>
     </div>
 </div>
 
 <!-- Section Produits -->
 <div class="my-5" id="produits">
-    <h2 class="text-center mb-5 display-5 fw-bold" style="color: #8b6f47;">
+    <h2 class="text-center mb-5 display-5 fw-bold" style="color: #8b6f47;"
+        data-aos="fade-down">
         ✨ Notre Collection
     </h2>
     
     <div class="row g-4">
         {% for product in products %}
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm product-card" style="border: none; border-radius: 15px; overflow: hidden; transition: transform 0.3s;">
-                <!-- Image du produit -->
+        <div class="col-md-6 col-lg-4" 
+             data-aos="fade-up" 
+             data-aos-delay="{{ loop.index0 * 100 }}"
+             data-aos-duration="600">
+            <div class="card h-100 shadow-sm product-card" style="border: none; border-radius: 15px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;">
                 <a href="{{ path('app_product_detail', {'id': product.id}) }}">
                     <div style="height: 300px; overflow: hidden; background: linear-gradient(135deg, #f5e6d3, #e8d5b7);">
                         <img src="{{ asset('img/' ~ product.image) }}" 
                              class="card-img-top" 
                              alt="{{ product.nom }}"
-                             style="width: 100%; height: 100%; object-fit: cover;">
+                             style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;">
                     </div>
                 </a>
                 
@@ -76,17 +86,17 @@
 
 <!-- Section Avantages -->
 <div class="row g-4 my-5 py-5" style="background: linear-gradient(135deg, #f5e6d3, #e8d5b7); border-radius: 15px;">
-    <div class="col-md-4 text-center p-4">
+    <div class="col-md-4 text-center p-4" data-aos="zoom-in" data-aos-delay="0">
         <div class="mb-3" style="font-size: 3rem;">🚚</div>
         <h5 class="fw-bold">Livraison Rapide</h5>
         <p class="text-muted">Expédition sous 48h</p>
     </div>
-    <div class="col-md-4 text-center p-4">
+    <div class="col-md-4 text-center p-4" data-aos="zoom-in" data-aos-delay="150">
         <div class="mb-3" style="font-size: 3rem;">✨</div>
         <h5 class="fw-bold">Qualité Premium</h5>
         <p class="text-muted">Parfums authentiques</p>
     </div>
-    <div class="col-md-4 text-center p-4">
+    <div class="col-md-4 text-center p-4" data-aos="zoom-in" data-aos-delay="300">
         <div class="mb-3" style="font-size: 3rem;">💝</div>
         <h5 class="fw-bold">Satisfaction Garantie</h5>
         <p class="text-muted">Retour sous 30 jours</p>
@@ -96,7 +106,24 @@
 <style>
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2) !important;
+}
+.product-card:hover img {
+    transform: scale(1.08);
 }
 </style>
+
+{% endblock %}
+
+{% block body_javascripts %}
+<script>
+    gsap.set('#hero-title',    { y: 30 });
+    gsap.set('#hero-subtitle', { y: 30 });
+    gsap.set('#hero-btn',      { y: 30 });
+
+    gsap.timeline()
+        .to('#hero-title',    { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 })
+        .to('#hero-subtitle', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+        .to('#hero-btn',      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+</script>
 {% endblock %}
