@@ -5,40 +5,67 @@
 {% block body %}
 
 <!-- Hero Section -->
-<div class="hero-section text-center py-5 position-relative" style="
-    background: linear-gradient(135deg, #3e2723, #6d4c41);
-    border-radius: 15px;
+<div class="hero-section text-center position-relative overflow-hidden" style="
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
     color: white;
-    min-height: 400px;
+    min-height: 550px;
     display: flex;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(2px);
 ">
-    <div>
-        <h1 class="display-3 fw-bold text-white mb-3 d-flex align-items-center justify-content-center"
-            id="hero-title" style="opacity: 0;">
+    <div class="position-relative" style="z-index: 10;">
+        <div id="hero-logo-wrap" style="opacity: 0; margin-bottom: 1.5rem;">
             <img src="{{ asset('img/logobedouin.jpg') }}" 
                  alt="Logo" 
-                 style="height: 80px; width: 80px; object-fit: cover; border-radius: 50%; margin-right: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-            Parfum d'Orient
+                 style="height: 100px; width: 100px; object-fit: cover; border-radius: 50%;
+                        box-shadow: 0 0 40px rgba(212,165,116,0.6);
+                        border: 2px solid rgba(212,165,116,0.4);">
+        </div>
+
+        <h1 class="fw-bold text-white mb-3" id="hero-title" 
+            style="opacity: 0; font-size: 4rem; font-family: 'Cormorant Garamond', serif;
+                   text-shadow: 0 2px 20px rgba(0,0,0,0.5); letter-spacing: 3px;">
+            Parfum <span style="color: #d4a574;">d'Orient</span>
         </h1>
-        <p class="lead fs-4 text-white" id="hero-subtitle" style="opacity: 0;">
+
+        <p class="lead mb-4" id="hero-subtitle" 
+           style="opacity: 0; font-size: 1.2rem; letter-spacing: 2px;
+                  color: rgba(255,255,255,0.9); font-weight: 300;
+                  text-shadow: 0 2px 10px rgba(0,0,0,0.4);">
             Découvrez nos parfums authentiques venus du Moyen-Orient
         </p>
-        <a href="#produits" class="btn btn-light btn-lg mt-3 px-5" 
-           id="hero-btn" style="opacity: 0;">
-            Découvrir nos parfums
-        </a>
+
+        <div id="hero-btn-wrap" style="opacity: 0;">
+            <a href="#produits" class="btn btn-lg px-5 py-3" style="
+                background: rgba(212,165,116,0.2);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(212,165,116,0.6);
+                color: white;
+                border-radius: 50px;
+                font-weight: 600;
+                letter-spacing: 2px;
+                font-size: 0.9rem;
+                transition: all 0.4s ease;
+            " onmouseover="this.style.background='rgba(212,165,116,0.5)'; this.style.boxShadow='0 0 30px rgba(212,165,116,0.4)'"
+               onmouseout="this.style.background='rgba(212,165,116,0.2)'; this.style.boxShadow='none'">
+                ✨ Découvrir nos parfums
+            </a>
+        </div>
     </div>
 </div>
 
 <!-- Section Produits -->
 <div class="my-5" id="produits">
-    <h2 class="text-center mb-5 display-5 fw-bold" style="color: #8b6f47;"
+    <h2 class="text-center mb-2 display-5 fw-bold" style="color: #3e2723;"
         data-aos="fade-down">
         ✨ Notre Collection
     </h2>
-    
+    <p class="text-center text-muted mb-5" data-aos="fade-up" data-aos-delay="100">
+        Des fragrances d'exception pour chaque moment
+    </p>
+
     <div class="row g-4">
         {% for product in products %}
         <div class="col-md-6 col-lg-4" 
@@ -56,7 +83,9 @@
                 </a>
                 
                 <div class="card-body p-4">
-                    <a href="{{ path('app_category_products', {'id': product.category.id}) }}" class="badge mb-2 text-decoration-none" style="background-color: #8a9a5b; font-size: 0.85rem;">
+                    <a href="{{ path('app_category_products', {'id': product.category.id}) }}" 
+                       class="badge mb-2 text-decoration-none" 
+                       style="background-color: #8a9a5b; font-size: 0.85rem;">
                         {{ product.category.nom }}
                     </a>
                     
@@ -68,7 +97,8 @@
                     
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="h4 mb-0 fw-bold" style="color: #8b6f47;">{{ product.prix }}€</span>
-                        <a href="{{ path('app_cart_add', {'id': product.id}) }}" class="btn btn-sm px-4" 
+                        <a href="{{ path('app_cart_add', {'id': product.id}) }}" 
+                           class="btn btn-sm px-4" 
                            style="background-color: #8b6f47; color: white; border-radius: 25px; text-decoration: none;">
                             🛒 Ajouter au panier
                         </a>
@@ -117,13 +147,15 @@
 
 {% block body_javascripts %}
 <script>
-    gsap.set('#hero-title',    { y: 30 });
-    gsap.set('#hero-subtitle', { y: 30 });
-    gsap.set('#hero-btn',      { y: 30 });
+    gsap.set('#hero-logo-wrap', { y: -30 });
+    gsap.set('#hero-title',     { y: 40 });
+    gsap.set('#hero-subtitle',  { y: 30 });
+    gsap.set('#hero-btn-wrap',  { y: 30 });
 
     gsap.timeline()
-        .to('#hero-title',    { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 })
-        .to('#hero-subtitle', { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
-        .to('#hero-btn',      { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
+        .to('#hero-logo-wrap', { opacity: 1, y: 0, duration: 0.8, ease: 'back.out(1.7)', delay: 0.3 })
+        .to('#hero-title',     { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4')
+        .to('#hero-subtitle',  { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+        .to('#hero-btn-wrap',  { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3');
 </script>
 {% endblock %}
